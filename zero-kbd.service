@@ -1,0 +1,12 @@
+[Unit]
+Description=Zero Keyboard USB HID Gadget
+After=local-fs.target
+Before=network.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/sbin/init_kbd.sh
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target
