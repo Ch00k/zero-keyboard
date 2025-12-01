@@ -13,7 +13,7 @@ Turn a Raspberry Pi into a USB HID keyboard that can be controlled remotely (e.g
 
 1. Download and unpack this repository on Raspberry Pi:
 ```bash
-whet https://github.com/Ch00k/zero-keyboard/archive/refs/heads/main.zip
+wget https://github.com/Ch00k/zero-keyboard/archive/refs/heads/main.zip
 unzip main.zip
 cd zero-keyboard-main
 ```
@@ -27,7 +27,7 @@ The installer will:
 - Enable USB gadget support in `/boot/firmware/config.txt`
 - Configure `dwc2` and `libcomposite` kernel modules to auto-load on boot
 - Install the HID gadget initialization script to `/usr/local/sbin/`
-- Install the `type` command to `/usr/local/bin/`
+- Install the `zero-type` command to `/usr/local/bin/`
 - Set up a systemd service to initialize the keyboard on boot
 
 3. Reboot the Pi:
@@ -39,37 +39,23 @@ sudo reboot
 
 ## Usage
 
-### First-Time Setup
-
-Some operating systems may run a keyboard identification wizard when you first connect the device. If prompted to identify the keyboard:
-
-```bash
-# Example: Press the 'Z' key (commonly requested during setup)
-echo -ne "\x00\x00\x1d\x00\x00\x00\x00\x00" | sudo tee /dev/hidg0 > /dev/null
-echo -ne "\x00\x00\x00\x00\x00\x00\x00\x00" | sudo tee /dev/hidg0 > /dev/null
-```
-
-Complete the setup wizard. The OS will remember your keyboard configuration for future connections.
-
-### Typing Text
-
-SSH into the Pi and use the `type` command:
+SSH into the Pi and use the `zero-type` command:
 
 ```bash
 # Type a password
-type "mypassword"
+zero-type "mypassword"
 
 # Type text with Enter key
-type "mypassword\n"
+zero-type "mypassword\n"
 
 # Pipe text to the command
-echo "some text" | type
+echo "some text" | zero-type
 ```
 
-The `type` command supports:
+The `zero-type` command supports:
 - All letters (a-z, A-Z)
 - Numbers (0-9)
-- Common symbols and punctuation
+- Symbols: `! @ # $ % ^ & * ( ) - _ = + [ ] { } \ | ; : ' " \` ~ , < . > / ?`
 - Special keys: Enter (`\n`), Tab (`\t`), Space
 
 ## Credits

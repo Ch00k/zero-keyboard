@@ -122,15 +122,15 @@ KEY_MAP = {
 
 def send_key(keycode, modifier=MOD_NONE):
     """Send a key press and release."""
-    # Press
-    report = bytes([modifier, 0x00, keycode, 0x00, 0x00, 0x00, 0x00, 0x00])
+    # Press (Report ID 1 + 8 bytes = 9 bytes total)
+    report = bytes([0x01, modifier, 0x00, keycode, 0x00, 0x00, 0x00, 0x00, 0x00])
     with open(HID_DEVICE, "rb+") as hid:
         hid.write(report)
 
     time.sleep(0.01)  # 10ms delay between press and release
 
-    # Release
-    report = bytes([0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00])
+    # Release (Report ID 1 + 8 bytes = 9 bytes total)
+    report = bytes([0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00])
     with open(HID_DEVICE, "rb+") as hid:
         hid.write(report)
 
